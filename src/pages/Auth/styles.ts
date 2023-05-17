@@ -2,7 +2,7 @@ import styled from 'styled-components/native';
 
 export const Container = styled.View`
   flex: 1;
-  background-color: #F7F8FA;;
+  background-color: #F7F8FA;
 
   padding: 35px 24px 0;
 `;
@@ -12,7 +12,7 @@ export const Logo = styled.Image`
   height: 60px;
 
   margin-bottom: 47px;
-`
+`;
 
 export const Text = styled.Text`
   font-size: 24px;
@@ -24,4 +24,4 @@ export const ContainerButton = styled.View`
   width: 100%;
   padding: 0 50px;
   margin-top: 80px;
-`
+`;

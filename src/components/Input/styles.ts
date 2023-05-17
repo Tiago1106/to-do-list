@@ -22,7 +22,7 @@ export const InputContainer = styled.View<InputProps>`
 
   ${(props) => props.isFocused && css`
     border-color: #006AFF;
-  `}
+  `};
 `
 
 export const Icon = styled(FontAwesome)<IconProps>`
@@ -31,11 +31,11 @@ export const Icon = styled(FontAwesome)<IconProps>`
   
   ${(props) => props.isComplete && css`
     color: #094AEA;
-  `}
+  `};
 
   ${(props) => props.isFocused && css`
     color: #006AFF;
-  `}
+  `};
 `
 
 export const Input = styled.TextInput<InputProps>`
@@ -45,9 +45,9 @@ export const Input = styled.TextInput<InputProps>`
 
   ${(props) => props.isFocused && css`
     border-color: #006AFF;
-  `}
+  `};
 
-  ::placeholder {
+  /* ::placeholder {
     color: #A3A3A3;
-  }
+  }; */
 `

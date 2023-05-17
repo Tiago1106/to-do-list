@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { KeyboardAvoidingView, Platform, ScrollView, TouchableWithoutFeedback, Keyboard  } from 'react-native'
+import { KeyboardAvoidingView, Platform, ScrollView, TouchableWithoutFeedback, Keyboard } from 'react-native'
 
 import { Container, Logo, Text, ContainerButton } from './styles';
 import Input from '../../components/Input';
@@ -42,7 +42,7 @@ const Auth: React.FC<ScreenProps> = ({ navigation }) => {
             <Input 
               icon='user'
               value={username}
-              placeholder='Username'
+              placeholder='Email'
               onChangeValue={(value: string) => setUsername(value)}
               isPassword={false}
             />
