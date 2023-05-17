@@ -45,7 +45,7 @@ const ListToDo: React.FC<ScreenProps> = ({ navigation }) => {
           <Text>Segunda-feira, 14 de fevereiro</Text>
         </ContainerText>
         <ContainerButton>
-          <Button inline title='Filtrar' onPress={() => console.log(`fea`)} nameIcon='filter' sizeIcon={14}/>
+          <Button inline title='Filtrar' onPress={() => console.log(`Filter`)} nameIcon='filter' sizeIcon={14}/>
         </ContainerButton>
       </ContainerHeader>
       <ScrollableContainer showsVerticalScrollIndicator={false}>

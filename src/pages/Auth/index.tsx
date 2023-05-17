@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { KeyboardAvoidingView, Platform, ScrollView } from 'react-native'
+import { KeyboardAvoidingView, Platform, ScrollView, TouchableWithoutFeedback, Keyboard  } from 'react-native'
 
 import { Container, Logo, Text, ContainerButton } from './styles';
 import Input from '../../components/Input';
@@ -16,45 +16,48 @@ const Auth: React.FC<ScreenProps> = ({ navigation }) => {
   const [password, setPassword] = useState<string>('')
   
   const HandleSubmit = () => {
-    console.log('Submit')
-    console.log(username, password)
-
     navigation.navigate('ListToDo')
   }
 
+  const handlePressOutside = () => {
+    Keyboard.dismiss();
+  };
+
   return (
-    <KeyboardAvoidingView
-      style={{ flex: 1 }}
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-      enabled
-    >
-      <ScrollView
-        keyboardShouldPersistTaps="never"
-        contentContainerStyle={{ flex: 1 }}
+    <TouchableWithoutFeedback onPress={handlePressOutside}>
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        enabled
       >
-        <Container>
-          <Logo source={imageLogo}/>
-          <Text>Olá, que bom te ver de novo. Vamos começar?</Text>
-          <Input 
-            icon='user'
-            value={username}
-            placeholder='Username'
-            onChangeValue={(value: string) => setUsername(value)}
-            isPassword={false}
-          />
-          <Input 
-            icon='lock'
-            value={password}
-            placeholder='Password'
-            onChangeValue={(value: string) => setPassword(value)}
-            isPassword
-          />
-          <ContainerButton>
-            <Button inline={false} title='Entrar' onPress={() => HandleSubmit()}/>
-          </ContainerButton>
-        </Container>
-      </ScrollView>
-    </KeyboardAvoidingView>
+        <ScrollView
+          keyboardShouldPersistTaps="never"
+          contentContainerStyle={{ flex: 1 }}
+        >
+          <Container>
+            <Logo source={imageLogo}/>
+            <Text>Olá, que bom te ver de novo. Vamos começar?</Text>
+            <Input 
+              icon='user'
+              value={username}
+              placeholder='Username'
+              onChangeValue={(value: string) => setUsername(value)}
+              isPassword={false}
+            />
+            <Input 
+              icon='lock'
+              value={password}
+              placeholder='Password'
+              onChangeValue={(value: string) => setPassword(value)}
+              isPassword
+            />
+            <ContainerButton>
+              <Button inline={false} title='Entrar' onPress={() => HandleSubmit()}/>
+            </ContainerButton>
+          </Container>
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
   );
 }
 

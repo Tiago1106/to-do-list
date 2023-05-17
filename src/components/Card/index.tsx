@@ -14,6 +14,7 @@ import {
 } from './styles';
 
 import Label from '../Label';
+import { useMock } from '../../store/mock';
 
 interface CardProps {
   company: string;
@@ -27,6 +28,20 @@ interface CardProps {
 
 const Card: React.FC<CardProps> = ({ idParams, company, date, finishedParams, hour, title, handleDelete }) => {
   const [finished, setFinished] = useState<boolean>(finishedParams)
+
+  const tasks = useMock((state) => state.data);
+  const setTasks = useMock((state) => state.setNewData);
+
+  const handleFinishedTask = (id: string) => {
+    const newTasks = tasks.map((task, index) => {
+      if(task.id === id) {
+        tasks[index].finishedParams = !finishedParams
+      }
+      return task
+     })
+    setTasks(newTasks)
+    setFinished(!finished)
+  }
   
   return (
     <Container>
@@ -35,11 +50,10 @@ const Card: React.FC<CardProps> = ({ idParams, company, date, finishedParams, ho
         <ContentTop>
           <ContentTitle>
             {finished ? (
-              <Icon name='checkbox-marked' size={36} color='#129E69' onPress={() => setFinished(!finished)}/>
+              <Icon name='checkbox-marked' size={36} color='#129E69' onPress={() => handleFinishedTask(idParams)}/>
             ) : (
-              <Icon name='checkbox-blank-outline' size={36} color='#CCCED9' onPress={() => setFinished(!finished)}/>
+              <Icon name='checkbox-blank-outline' size={36} color='#CCCED9' onPress={() => handleFinishedTask(idParams)}/>
             )}
-            {/* trash-can-outline, checkbox-marked */}
             <Title numberOfLines={2} finished={finished}>{title}</Title>
           </ContentTitle>
           <Icon name='trash-can-outline' size={30} color='#E01644' onPress={handleDelete}/>
