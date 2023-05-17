@@ -29,8 +29,8 @@ const NewTask: React.FC<ScreenProps> = ({ navigation }) => {
     Keyboard.dismiss();
   };
 
-  const handleNewTask = async () => {
-    try {
+  const handleNewTask = () => {  
+    if(descriptionTask && dateTask && hourTask) {
       const DataNewTask = {
         id: Math.random().toString(),
         company: companyTask,
@@ -42,7 +42,6 @@ const NewTask: React.FC<ScreenProps> = ({ navigation }) => {
       
       setTasks([...tasks, DataNewTask])
       navigation.navigate('ListToDo')
-    } catch (error) {
     }
   }
 

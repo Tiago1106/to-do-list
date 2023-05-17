@@ -16,7 +16,9 @@ const Auth: React.FC<ScreenProps> = ({ navigation }) => {
   const [password, setPassword] = useState<string>('')
   
   const HandleSubmit = () => {
-    navigation.navigate('ListToDo')
+    if(username && password.length>=6) {
+      navigation.navigate('ListToDo')
+    }
   }
 
   const handlePressOutside = () => {

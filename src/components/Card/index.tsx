@@ -63,7 +63,9 @@ const Card: React.FC<CardProps> = ({ idParams, company, date, finishedParams, ho
           <Text>{hour}</Text>
           <IconBottom name='calendar'size={16}/>
           <Text>{date}</Text>
-          <Label selected={false} title={company}/>
+          {company && (
+            <Label selected={false} title={company}/>
+          )}
         </ContentBottom>
       </Content>
     </Container>
