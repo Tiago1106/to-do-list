@@ -1,12 +1,12 @@
 import { StatusBar, SafeAreaView } from 'react-native'
 
-import Auth from "./src/pages/Auth";
+import Routes from './src/routes/Routes';
 
 export default function App() { 
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <StatusBar barStyle="dark-content" />
-      <Auth />    
+    <SafeAreaView style={{flex: 1, backgroundColor: "#F7F8FA"}}>
+      <StatusBar barStyle="dark-content" backgroundColor="#F7F8FA"/>
+      <Routes />    
     </SafeAreaView>
   );
 }

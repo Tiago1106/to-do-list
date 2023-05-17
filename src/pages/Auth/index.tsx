@@ -7,14 +7,19 @@ import Button from '../../components/Button';
 
 import imageLogo from '../../assets/logo.png';
 
+interface ScreenProps {
+  navigation: any;
+}
 
-const Auth: React.FC = () => {
+const Auth: React.FC<ScreenProps> = ({ navigation }) => {
   const [username, setUsername] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   
   const HandleSubmit = () => {
     console.log('Submit')
     console.log(username, password)
+
+    navigation.navigate('ListToDo')
   }
 
   return (
@@ -45,7 +50,7 @@ const Auth: React.FC = () => {
             isPassword
           />
           <ContainerButton>
-            <Button title='Entrar' onPress={() => HandleSubmit()}/>
+            <Button inline={false} title='Entrar' onPress={() => HandleSubmit()}/>
           </ContainerButton>
         </Container>
       </ScrollView>
