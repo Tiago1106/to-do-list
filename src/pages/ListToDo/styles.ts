@@ -64,3 +64,15 @@ export const Divisor = styled.View`
   background-color: #CCCED9;
   margin: 10px 0 15px;
 `
+
+export const ContainerMessage = styled.View`
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+`
+
+export const Message = styled.Text`
+  font-size: 18px;
+  color: #262833;
+  text-align: center;
+`

@@ -14,6 +14,8 @@ export const ButtonContainer = styled.TouchableOpacity<ButtonProps>`
   justify-content: center;
   align-items: center;
 
+  position: relative;
+
   width: 100%;
   height: 50px;
 
@@ -42,3 +44,21 @@ export const Icon = styled(Feather)<ButtonProps>`
     color: #006AFF;
   `}
 `;
+
+export const ContainerHaveFilter = styled.View`
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  right: -12px;
+  top: -12px;
+  border-radius: 12.5px;
+
+  align-items: center;
+  justify-content: center;
+
+  background-color: #E01644;
+`
+export const TextHaveFilter = styled.Text`
+  font-size: 14px;
+  color: #ffffff;
+`

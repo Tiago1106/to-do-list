@@ -16,7 +16,6 @@ const Auth: React.FC = () => {
   const { signIn } = useAuth();
 
   const HandleSubmit = useCallback(async (email: string, password: string) => {
-    console.log(email, password)
     
     if(email && password.length>=6) {
       await signIn({

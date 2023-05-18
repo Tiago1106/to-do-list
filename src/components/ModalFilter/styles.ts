@@ -34,5 +34,16 @@ export const ModalText = styled.Text`
 
 export const ContainerLabels = styled.View`
   flex-direction: row;
+`
 
+export const ContainerTop = styled.View`
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+`
+
+export const TextClear = styled.Text`
+  color: #E01644;
+  font-size: 18px;
 `

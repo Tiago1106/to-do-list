@@ -5,6 +5,8 @@ import DataMock from '../mock/data.json'
 type MyState = {
   data: DataProps[];
   setNewData: (newData: DataProps[]) => void;
+  dataFilter: DataProps[];
+  setNewDataFilter: (newData: DataProps[]) => void;
 };
 
 interface DataProps {
@@ -19,4 +21,6 @@ interface DataProps {
 export const useMock = create<MyState>((set) => ({
   data: DataMock,
   setNewData: (newData: DataProps[]) => set({ data: newData }),
+  dataFilter: [],
+  setNewDataFilter: (newData: DataProps[]) => set({ dataFilter: newData }),
 }));

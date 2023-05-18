@@ -50,7 +50,6 @@ const AuthProvider: React.FC<any>= ({ children }) => {
   });
 
   const signIn = useCallback(async ({ email, password }: { email: string, password: string }) => {
-    console.log(email, password)
     if(email === 'teste@gmail.com' && password === '123456') {
       const token = 'tokenTeste'
       const user = {

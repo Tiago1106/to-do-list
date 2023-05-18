@@ -54,7 +54,7 @@ const Card: React.FC<CardProps> = ({ idParams, company, date, finishedParams, ho
             ) : (
               <Icon name='checkbox-blank-outline' size={36} color='#CCCED9' onPress={() => handleFinishedTask(idParams)}/>
             )}
-            <Title numberOfLines={2} finished={finished}>{title}</Title>
+            <Title numberOfLines={2} finished={finished} onPress={() => handleFinishedTask(idParams)}>{title}</Title>
           </ContentTitle>
           <Icon name='trash-can-outline' size={30} color='#E01644' onPress={handleDelete}/>
         </ContentTop>
