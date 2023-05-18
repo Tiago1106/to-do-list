@@ -46,8 +46,4 @@ export const Input = styled.TextInput<InputProps>`
   ${(props) => props.isFocused && css`
     border-color: #006AFF;
   `}
-
-  ::placeholder {
-    color: #A3A3A3;
-  }
 `

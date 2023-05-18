@@ -47,3 +47,9 @@ export const TitleInputs = styled.Text`
 export const DivCompanys = styled.View`
   flex-direction: row;
 `
+
+export const ContainerLogo = styled.View`
+  width: 100%;
+  justify-content: space-between;
+  flex-direction: row;
+`

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { KeyboardAvoidingView, Platform, ScrollView, TouchableWithoutFeedback, Keyboard  } from 'react-native'
+import { KeyboardAvoidingView, Platform, ScrollView, TouchableWithoutFeedback, Keyboard, Alert  } from 'react-native'
+import Icon from 'react-native-vector-icons/AntDesign';
 
-import { Container, ContainerHeader, Logo, Text, Title, ContainerInput, TitleInputs, DivCompanys } from './styles';
+import { Container, ContainerHeader, Logo, Text, Title, ContainerInput, TitleInputs, DivCompanys, ContainerLogo } from './styles';
 
 import imageLogo from '../../assets/logo.png';
 import { useMock } from '../../store/mock';
@@ -42,6 +43,8 @@ const NewTask: React.FC<ScreenProps> = ({ navigation }) => {
       
       setTasks([...tasks, DataNewTask])
       navigation.navigate('ListToDo')
+    } else {
+      Alert.alert("Todos os campos precisam ser preenchidos!")
     }
   }
 
@@ -58,7 +61,10 @@ const NewTask: React.FC<ScreenProps> = ({ navigation }) => {
         >
           <Container>
             <ContainerHeader>
-              <Logo source={imageLogo}/>
+              <ContainerLogo>
+                <Logo source={imageLogo}/>
+                <Icon name='back' color="#262833" size={30} onPress={() => navigation.goBack()}/>
+              </ContainerLogo>
               <Title>Crie uma tarefa</Title>
               <Text>Descreva brevemente a sua tarefa e adicione um prazo.</Text>
             </ContainerHeader>
@@ -93,9 +99,9 @@ const NewTask: React.FC<ScreenProps> = ({ navigation }) => {
             <ContainerInput>
               <TitleInputs>Selecione uma empresa:</TitleInputs>
               <DivCompanys>
-                <Label title='q2bank' selected={companyTask === "q2bank" ? true : false} onPress={() => setCompanyTask('q2bank')}/>
-                <Label title='q2pay' selected={companyTask === "q2pay" ? true : false} onPress={() => setCompanyTask('q2pay')}/>
-                <Label title='q2ingressos' selected={companyTask === "q2ingressos" ? true : false} onPress={() => setCompanyTask('q2ingressos')}/>
+                <Label title='q2bank' selected={companyTask === "q2bank" ? true : false} onPress={() => setCompanyTask(companyTask === 'q2bank' ? '' : 'q2bank')}/>
+                <Label title='q2pay' selected={companyTask === "q2pay" ? true : false} onPress={() => setCompanyTask(companyTask === 'q2pay' ? '' : 'q2pay')}/>
+                <Label title='q2ingressos' selected={companyTask === "q2ingressos" ? true : false} onPress={() => setCompanyTask(companyTask === 'q2ingressos' ? '' : 'q2ingressos')}/>
               </DivCompanys>
             </ContainerInput>
             <Button title='Salvar tarefa' nameIcon='save' sizeIcon={16} inline={false} onPress={() => handleNewTask()}/>

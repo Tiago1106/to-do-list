@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { KeyboardAvoidingView, Platform, ScrollView, TouchableWithoutFeedback, Keyboard } from 'react-native'
+import React, { useState, useCallback } from 'react';
+import { KeyboardAvoidingView, Platform, ScrollView, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native'
 
 import { Container, Logo, Text, ContainerButton } from './styles';
 import Input from '../../components/Input';
@@ -7,19 +7,26 @@ import Button from '../../components/Button';
 
 import imageLogo from '../../assets/logo.png';
 
-interface ScreenProps {
-  navigation: any;
-}
+import { useAuth } from '../../hooks/auth';
 
-const Auth: React.FC<ScreenProps> = ({ navigation }) => {
-  const [username, setUsername] = useState<string>('')
+const Auth: React.FC = () => {
+  const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   
-  const HandleSubmit = () => {
-    if(username && password.length>=6) {
-      navigation.navigate('ListToDo')
+  const { signIn } = useAuth();
+
+  const HandleSubmit = useCallback(async (email: string, password: string) => {
+    console.log(email, password)
+    
+    if(email && password.length>=6) {
+      await signIn({
+        email: email,
+        password: password,
+      });
+    } else {
+      Alert.alert("Algo deu errado, tente novamente!")
     }
-  }
+  },[])
 
   const handlePressOutside = () => {
     Keyboard.dismiss();
@@ -41,9 +48,9 @@ const Auth: React.FC<ScreenProps> = ({ navigation }) => {
             <Text>Olá, que bom te ver de novo. Vamos começar?</Text>
             <Input 
               icon='user'
-              value={username}
+              value={email}
               placeholder='Email'
-              onChangeValue={(value: string) => setUsername(value)}
+              onChangeValue={(value: string) => setEmail(value)}
               isPassword={false}
             />
             <Input 
@@ -54,7 +61,7 @@ const Auth: React.FC<ScreenProps> = ({ navigation }) => {
               isPassword
             />
             <ContainerButton>
-              <Button inline={false} title='Entrar' onPress={() => HandleSubmit()}/>
+              <Button inline={false} title='Entrar' onPress={() => HandleSubmit(email, password)}/>
             </ContainerButton>
           </Container>
         </ScrollView>

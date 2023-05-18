@@ -28,6 +28,7 @@ export const Title = styled.Text`
 export const Text = styled.Text`
   font-size: 14px;
   color: #262833;
+  text-transform: capitalize;
 `
 
 export const Logo = styled.Image`
@@ -49,4 +50,17 @@ export const ContainerButtonCreate = styled.View`
   width: 100%;
   padding: 0 50px;
   margin-top: 10px;
+`
+
+export const ContainerLogo = styled.View`
+  width: 100%;
+  justify-content: space-between;
+  flex-direction: row;
+`
+
+export const Divisor = styled.View`
+  width: 100%;
+  height: 1px;
+  background-color: #CCCED9;
+  margin: 10px 0 15px;
 `

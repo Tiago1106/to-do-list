@@ -1,24 +1,22 @@
-import React from "react";
+import React from 'react';
+import { View, ActivityIndicator } from 'react-native';
 
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import AuthRoutes from './auth.routes';
+import AppRoutes from './app.routes';
 
-import Auth from "../pages/Auth";
-import ListToDo from "../pages/ListToDo";
-import NewTask from "../pages/NewTask";
-
-const Stack = createNativeStackNavigator();
+import { useAuth } from '../hooks/auth';
 
 const Routes: React.FC = () => {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Auth" component={Auth}/>
-        <Stack.Screen name="ListToDo" component={ListToDo}/>
-        <Stack.Screen name="NewTask" component={NewTask}/>
-      </Stack.Navigator>
-    </NavigationContainer>
-  )
-}
+  const { user, loading } = useAuth();
+
+  if (loading) {
+    return (
+        <ActivityIndicator size="large" color="#999" />
+    );
+  }
+
+  // return <AppRoutes />;
+  return user ? <AppRoutes /> : <AuthRoutes />;
+};
 
 export default Routes;
