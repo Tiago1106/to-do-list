@@ -7,6 +7,7 @@ Developed by [Tiago de Freitas Pinheiro](https://github.com/Tiago1106), [Linkedi
 
 - In development, coming soon.
     - [ ] Integrate with backend
+    - [ ] Add styled-components theme
 
 ## 📌 Requirements:
 
