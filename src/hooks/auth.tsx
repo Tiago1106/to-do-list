@@ -7,7 +7,6 @@ import React, {
 } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Alert } from 'react-native';
-// import api from '../services/api';
 
 interface AuthState {
   token: string;
@@ -68,23 +67,6 @@ const AuthProvider: React.FC<any>= ({ children }) => {
     } else {
       Alert.alert("Algo deu errado, tente novamente!")
     }
-    
-    // const response = await api.post('/sessions', {
-    //   email,
-    //   password,
-    // });
-
-    // const { token, user } = response.data;
-
-    // await AsyncStorage.multiSet([
-    //   ['@Tasks:token', token],
-    //   ['@Tasks:user', JSON.stringify(user)],
-    // ]);
-
-    // setData({
-    //   token,
-    //   user,
-    // });
   }, []);
 
   const signOut = useCallback(async () => {

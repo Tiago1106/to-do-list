@@ -25,22 +25,22 @@ const Auth: React.FC = () => {
     } else {
       Alert.alert("Algo deu errado, tente novamente!")
     }
-  },[])
+  },[signIn])
 
   const handlePressOutside = () => {
     Keyboard.dismiss();
   };
 
   return (
-    <TouchableWithoutFeedback onPress={handlePressOutside}>
+    <TouchableWithoutFeedback onPress={handlePressOutside} >
       <KeyboardAvoidingView
         style={{ flex: 1 }}
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-        enabled
+        enabled={true}
       >
         <ScrollView
-          keyboardShouldPersistTaps="never"
-          contentContainerStyle={{ flex: 1 }}
+          keyboardShouldPersistTaps="handled"
+          contentContainerStyle={{ flexGrow: 1 }}
         >
           <Container>
             <Logo source={imageLogo}/>
@@ -51,6 +51,7 @@ const Auth: React.FC = () => {
               placeholder='Email'
               onChangeValue={(value: string) => setEmail(value)}
               isPassword={false}
+              keyboardType="email-address"
             />
             <Input 
               icon='lock'
@@ -58,6 +59,7 @@ const Auth: React.FC = () => {
               placeholder='Password'
               onChangeValue={(value: string) => setPassword(value)}
               isPassword
+              keyboardType="default"
             />
             <ContainerButton>
               <Button inline={false} title='Entrar' onPress={() => HandleSubmit(email, password)}/>

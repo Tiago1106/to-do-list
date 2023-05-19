@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components/native";
 import FontAwesome from 'react-native-vector-icons/FontAwesome5';
+import { TextInputMask  } from 'react-native-masked-text';
 
 interface InputProps {
   isFocused: boolean;
@@ -38,7 +39,7 @@ export const Icon = styled(FontAwesome)<IconProps>`
   `}
 `
 
-export const Input = styled.TextInput<InputProps>`
+export const Input = styled(TextInputMask)<InputProps>`
   flex: 1;
   padding: 5px;
   color: #262833;

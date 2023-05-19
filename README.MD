@@ -28,7 +28,7 @@ $ git clone https://github.com/Tiago1106/Ecommerce.git
 # Install the dependencies
 $ yarn install or npm install
 # Execute the project
-$ npm start or npm start
+$ yarn start or npm start
 #To login to the application, use:
 #Email: teste@gmail.com
 #Password: 123456

@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { KeyboardAvoidingView, Platform, ScrollView, TouchableWithoutFeedback, Keyboard, Alert  } from 'react-native'
 import Icon from 'react-native-vector-icons/AntDesign';
+import moment from 'moment';
+
+import { v4 as uuidv4 } from 'uuid';
+import 'react-native-get-random-values';
 
 import { Container, ContainerHeader, Logo, Text, Title, ContainerInput, TitleInputs, DivCompanys, ContainerLogo } from './styles';
 
 import imageLogo from '../../assets/logo.png';
 import { useMock } from '../../store/mock';
-import { handleDateChange, handleHourChange } from '../../utils/masks'
 
 import Input from '../../components/Input';
 import InputMask from '../../components/InputMask';
@@ -31,18 +34,24 @@ const NewTask: React.FC<ScreenProps> = ({ navigation }) => {
   };
 
   const handleNewTask = () => {  
+    const hourValid = /^([01]\d|2[0-3]):([0-5]\d)$/.test(hourTask)
+    const dateValid = moment(dateTask, 'DD/MM', true).isValid();
     if(descriptionTask && dateTask && hourTask) {
-      const DataNewTask = {
-        id: Math.random().toString(),
-        company: companyTask,
-        finishedParams: false,
-        title: descriptionTask,
-        hour: hourTask,
-        date: dateTask
+      if(hourValid && dateValid) {
+        const DataNewTask = {
+          id: uuidv4(),
+          company: companyTask,
+          finishedParams: false,
+          title: descriptionTask,
+          hour: hourTask,
+          date: dateTask
+        }
+        
+        setTasks([...tasks, DataNewTask])
+        navigation.navigate('ListToDo')
+      } else {
+        Alert.alert("Verifique a hora e a data, podem estar invalidos!")  
       }
-      
-      setTasks([...tasks, DataNewTask])
-      navigation.navigate('ListToDo')
     } else {
       Alert.alert("Todos os campos precisam ser preenchidos!")
     }
@@ -56,8 +65,8 @@ const NewTask: React.FC<ScreenProps> = ({ navigation }) => {
         enabled
       >
         <ScrollView
-          keyboardShouldPersistTaps="never"
-          contentContainerStyle={{ flex: 1 }}
+          keyboardShouldPersistTaps="handled"
+          contentContainerStyle={{ flexGrow: 1 }}
         >
           <Container>
             <ContainerHeader>
@@ -76,6 +85,7 @@ const NewTask: React.FC<ScreenProps> = ({ navigation }) => {
                 isPassword={false} 
                 onChangeValue={(e) => setDescriptionTask(e)}
                 value={descriptionTask}
+                keyboardType='default'
               />
             </ContainerInput>
             <ContainerInput>
@@ -83,8 +93,9 @@ const NewTask: React.FC<ScreenProps> = ({ navigation }) => {
               <InputMask 
                 placeholder='08:00' 
                 icon='clock' 
-                onChangeValue={(e) => setHourTask(handleHourChange(e))}
+                onChangeValue={(e) => setHourTask(e)}
                 value={hourTask}
+                format='HH:mm'
               />
             </ContainerInput>
             <ContainerInput>
@@ -92,8 +103,9 @@ const NewTask: React.FC<ScreenProps> = ({ navigation }) => {
               <InputMask 
                 placeholder='14/02' 
                 icon='calendar'
-                onChangeValue={(e) => setDateTask(handleDateChange(e))}
+                onChangeValue={(e) => setDateTask(e)}
                 value={dateTask}
+                format='DD/MM'
               />
             </ContainerInput>
             <ContainerInput>

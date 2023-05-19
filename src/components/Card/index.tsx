@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { 
   Container, 
@@ -28,6 +28,7 @@ interface CardProps {
 
 const Card: React.FC<CardProps> = ({ idParams, company, date, finishedParams, hour, title, handleDelete }) => {
   const [finished, setFinished] = useState<boolean>(finishedParams)
+  const [late, setLate] = useState<boolean>(false)
 
   const tasks = useMock((state) => state.data);
   const setTasks = useMock((state) => state.setNewData);
@@ -42,6 +43,19 @@ const Card: React.FC<CardProps> = ({ idParams, company, date, finishedParams, ho
     setTasks(newTasks)
     setFinished(!finished)
   }
+
+  useEffect(() => {
+    const partsDate = date.split('/')
+    const day = parseInt(partsDate[0], 10);
+    const month = parseInt(partsDate[1], 10) - 1;
+    const currentYear = new Date().getFullYear();
+    const dateToCompare = new Date(currentYear, month, day);
+    const currentDate = new Date();
+
+    if(dateToCompare < currentDate) {
+      setLate(true)
+    }
+  }, [])
   
   return (
     <Container>
@@ -65,6 +79,9 @@ const Card: React.FC<CardProps> = ({ idParams, company, date, finishedParams, ho
           <Text>{date}</Text>
           {company && (
             <Label selected={false} title={company}/>
+          )}
+          {late && finishedParams === false && (
+            <Icon name="alert-decagram" size={20} color='#E01644' style={{marginLeft: 5}}/>
           )}
         </ContentBottom>
       </Content>

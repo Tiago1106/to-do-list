@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react'
 
 import { InputContainer, Icon, Input as InputStyled} from './styles'
-import { KeyboardTypeOptions } from 'react-native';
+import { TextInput } from 'react-native';
 
 interface InputProps {
   value: string;
   onChangeValue: (value: string) => void;
   icon: string;
   placeholder: string;
+  format: string;
 }
 
-const InputMask: React.FC<InputProps> = ({ icon, onChangeValue, value, placeholder }) => {
+const InputMaskComponent: React.FC<InputProps> = ({ icon, onChangeValue, value, placeholder, format }) => {
   const [isFocused, setIsFocused] = useState<boolean>(false)
   const [isComplete, setIsComplete] = useState<boolean>(false)
   
@@ -26,9 +27,13 @@ const InputMask: React.FC<InputProps> = ({ icon, onChangeValue, value, placehold
     <InputContainer isFocused={isFocused}>     
       <Icon name={icon} size={20} isFocused={isFocused} isComplete={isComplete}/>
       <InputStyled 
+        options={{
+          format: format,
+        }}
+        type={'datetime'}
+        customTextInput={TextInput}
         placeholder={placeholder}
         value={value}
-        keyboardType='numeric'
         maxLength={5}
         onChangeText={onChangeValue}
         isFocused={isFocused}
@@ -39,4 +44,4 @@ const InputMask: React.FC<InputProps> = ({ icon, onChangeValue, value, placehold
   )
 }
 
-export default InputMask;
+export default InputMaskComponent;

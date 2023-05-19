@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { View, ActivityIndicator } from 'react-native';
 
 import moment from 'moment';
 import 'moment/locale/pt-br';
@@ -35,10 +36,23 @@ interface ScreenProps {
   navigation: any;
 }
 
+interface DataProps {
+  id: string;
+  company: string;
+  finishedParams: boolean;
+  title: string;
+  hour: string;
+  date: string;
+}
+
 const ListToDo: React.FC<ScreenProps> = ({ navigation }) => {
   const [isOpenModalDelete, setIsOpenModalDelete] = useState<boolean>(false)
   const [isOpenModalFilter, setIsOpenModalFilter] = useState<boolean>(false)
   const [day, setDay] = useState<string>('')
+  const [nextTask, setNextTask] = useState<DataProps[]>([])
+  const [dayTask, setDayTask] = useState<DataProps[]>([])
+  const [filterTask, setFilterTask] = useState<DataProps[]>([])
+  const [loading, setLoading] = useState<boolean>(true)
 
   const idTaskSelected = useMyStore((state) => state.idTaskSelected);
   const setIdTaskSelected = useMyStore((state) => state.setIdTaskSelected);
@@ -62,73 +76,55 @@ const ListToDo: React.FC<ScreenProps> = ({ navigation }) => {
   }, [])
 
   function ListTasks() {
-    // VERIFICA SE TEM FILTRO 
     if (haveFilters > 0) {
-      //VERIFICA SE TEM TAREFAS COM ESSE FILTRO
       if (taskFilter.length > 0) {
-        // RETORNA AS TAREFAS COM O FILTRO
-        const auxTaskFilter = taskFilter.map((data, _index) => {
-          return (
-            <Card
-              key={data.id}
-              idParams={data.id}
-              company={data.company}
-              date={data.date}
-              finishedParams={data.finishedParams}
-              hour={data.hour}
-              title={data.title}
-              handleDelete={() => {
-                setIsOpenModalDelete(true);
-                setIdTaskSelected(data.id)
-              }}
-            />
-          )
+        const auxFilterTask: DataProps[] = taskFilter.map((data, _index) => {
+          return data
         })
-
-        return auxTaskFilter
+        setFilterTask(auxFilterTask)
       } else {
-        // RETORNA UM TEXTO " NENHUMA TAREFA COM OS FILTROS ENCONTRADA "
-        return (
-          <ContainerMessage>
-            <Message>Nenhuma tarefa encontrada com esse filtro</Message>
-          </ContainerMessage>
-        )
+        setFilterTask([])
       }
     } else {
-      // VERIFICA SE EXISTE ALGUMA TAREFA CADASTRADA
       if (tasks.length > 0) {
-        // RETORNA AS TAREFAS CADASTRADAS
-        const auxTasks = tasks.map((data, _index) => {
-          return (
-            <Card
-              key={data.id}
-              idParams={data.id}
-              company={data.company}
-              date={data.date}
-              finishedParams={data.finishedParams}
-              hour={data.hour}
-              title={data.title}
-              handleDelete={() => {
-                setIsOpenModalDelete(true);
-                setIdTaskSelected(data.id)
-              }}
-            />
-          )
+        const auxNextTask: DataProps[] = [];
+        const auxDayTask: DataProps[] = [];
+        tasks.map((data, _index) => {
+          const formatoData = 'DD/MM';
+          const dataAtual = moment();
+          const dataComparacao = moment(data.date, formatoData);
+          if (dataComparacao.isAfter(dataAtual, 'day')) {
+            auxNextTask.push(data)
+          } else {
+            auxDayTask.push(data)
+          }
         })
-        return auxTasks
-      } else {
-        // RETORNA UM TEXTO "NENHUMA TAREFA CADASTRADA"
-        return (
-          <ContainerMessage>
-            <Message>Nenhuma tarefa cadastrada</Message>
-          </ContainerMessage>
-        )
+        setNextTask(auxNextTask)
+        setDayTask(auxDayTask)
       }
     }
   }
 
+  const getCard = (data: DataProps, index: number): JSX.Element => {
+    const key = `${data.id}-${index}`
+    return <Card
+      key={key}
+      idParams={data.id}
+      company={data.company}
+      date={data.date}
+      finishedParams={data.finishedParams}
+      hour={data.hour}
+      title={data.title}
+      handleDelete={() => {
+        setIsOpenModalDelete(true);
+        setIdTaskSelected(data.id)
+      }}
+    />
+  }
+
   useEffect(() => {
     ListTasks();
+    setLoading(false)
   }, [haveFilters, tasks, taskFilter])
 
   return (
@@ -153,11 +149,61 @@ const ListToDo: React.FC<ScreenProps> = ({ navigation }) => {
           <Text>{day}</Text>
         </ContainerText>
         <ContainerButton>
-          <Button inline title='Filtrar' onPress={() => setIsOpenModalFilter(true)} nameIcon='filter' sizeIcon={14} haveFilter={haveFilters}/>
+          <Button inline title='Filtrar' onPress={() => setIsOpenModalFilter(true)} nameIcon='filter' sizeIcon={14} haveFilter={haveFilters} />
         </ContainerButton>
       </ContainerHeader>
       <ScrollableContainer showsVerticalScrollIndicator={false}>
-        {ListTasks()}
+        {loading ? (
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <ActivityIndicator size="large" color="#999" />
+          </View>
+        ) : (
+          <>
+            {haveFilters > 0 ? (
+              filterTask.length > 0 ? (
+                filterTask.map((data, index) => (
+                  getCard(data, index)
+                ))
+              ) : (
+                <ContainerMessage>
+                  <Message>Não possui tarefa com esses filtros encontrada!</Message>
+                </ContainerMessage>
+              )
+            ) : (
+              <>
+                {tasks.length > 0 ? (
+                  <>
+                    {dayTask.length > 0 && (
+                      dayTask.map((data, index) => (
+                        getCard(data, index)
+                      ))
+                    )}
+
+                    {dayTask.length === 0 && nextTask.length > 0 && (
+                      <ContainerMessage>
+                        <Message>Não possui tarefa para o dia de hoje!</Message>
+                      </ContainerMessage>
+                    )}
+
+                    {nextTask.length > 0 && (
+                      <>
+                        <Divisor />
+                        <Title style={{ marginBottom: 15 }} >Próximas demandas</Title>
+                        {nextTask.map((data, index) => (
+                          getCard(data, index)
+                        ))}
+                      </>
+                    )}
+                  </>
+                ) : (
+                  <ContainerMessage>
+                    <Message>Não possui tarefas cadastradas!</Message>
+                  </ContainerMessage>
+                )}
+              </>
+            )}
+          </>
+        )}
       </ScrollableContainer>
       <ContainerButtonCreate>
         <Button
@@ -173,21 +219,3 @@ const ListToDo: React.FC<ScreenProps> = ({ navigation }) => {
 }
 
 export default ListToDo;
-
-{/* <Divisor />
-    <Title style={{marginBottom: 15}} >Próximas demandas</Title>
-    {tasks.map((data, _i) => (
-      <Card 
-        key={data.id}
-        idParams={data.id}
-        company={data.company} 
-        date={data.date} 
-        finishedParams={data.finishedParams} 
-        hour={data.hour} 
-        title={data.title} 
-        handleDelete={() => {
-          setIsOpenModalDelete(true);
-          setIdTaskSelected(data.id)
-        }}
-      />
-))} */}
