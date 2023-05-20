@@ -93,11 +93,13 @@ const ListToDo: React.FC<ScreenProps> = ({ navigation }) => {
           const formatoData = 'DD/MM';
           const dataAtual = moment();
           const dataComparacao = moment(data.date, formatoData);
-          if (dataComparacao.isAfter(dataAtual, 'day')) {
+          
+          if (dataComparacao.isAfter(dataAtual, 'day') && data.finishedParams === false) {
             auxNextTask.push(data)
-          } else {
+          } else if (data.finishedParams === false){
             auxDayTask.push(data)
           }
+          
         })
         setNextTask(auxNextTask)
         setDayTask(auxDayTask)
