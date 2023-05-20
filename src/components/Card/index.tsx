@@ -44,7 +44,7 @@ const Card: React.FC<CardProps> = ({ idParams, company, date, finishedParams, ho
     setFinished(!finished)
     setTimeout(() => {
       setTasks(newTasks)
-    }, 3000)
+    }, 2000)
   }
 
   useEffect(() => {
