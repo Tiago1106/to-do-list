@@ -24,7 +24,7 @@ To install the necessary dependencies and run the project in the emulator, just 
 
 ```bash
 # Clone the repository
-$ git clone https://github.com/Tiago1106/Ecommerce.git
+$ git clone https://github.com/Tiago1106/to-do-list.git
 # Install the dependencies
 $ yarn install or npm install
 # Execute the project
