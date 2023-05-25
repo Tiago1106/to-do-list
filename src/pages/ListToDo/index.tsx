@@ -61,11 +61,13 @@ const ListToDo: React.FC<ScreenProps> = ({ navigation }) => {
   const tasks = useMock((state) => state.data);
   const setTasks = useMock((state) => state.setNewData);
   const taskFilter = useMock((state) => state.dataFilter);
+  const setDataFilter = useMock((state) => state.setNewDataFilter);
 
   const { signOut } = useAuth();
 
   const handleDelete = (id: string | number[]) => {
     setTasks(tasks.filter(t => t.id !== id))
+    setDataFilter(taskFilter.filter(t => t.id !== id))
     setIsOpenModalDelete(false)
   }
 
