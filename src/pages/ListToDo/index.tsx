@@ -181,7 +181,7 @@ const ListToDo: React.FC<ScreenProps> = ({ navigation }) => {
                       ))
                     )}
 
-                    {dayTask.length === 0 && nextTask.length > 0 && (
+                    {dayTask.length === 0 && nextTask.length >= 0 && (
                       <ContainerMessage>
                         <Message>Não possui tarefa para o dia de hoje!</Message>
                       </ContainerMessage>
