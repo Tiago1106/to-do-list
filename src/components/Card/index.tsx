@@ -23,7 +23,7 @@ interface CardProps {
   title: string;
   hour: string;
   date: string;
-  idParams: string;
+  idParams: string | number[];
   handleDelete: () => void;
 }
 
@@ -34,7 +34,7 @@ const Card: React.FC<CardProps> = ({ idParams, company, date, finishedParams, ho
   const tasks = useMock((state) => state.data);
   const setTasks = useMock((state) => state.setNewData);
 
-  const handleFinishedTask = (id: string) => {
+  const handleFinishedTask = (id: string | number[]) => {
     const newTasks = tasks.map((task, index) => {
       if (task.id === id) {
         tasks[index].finishedParams = !finishedParams

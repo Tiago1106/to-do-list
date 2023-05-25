@@ -37,7 +37,7 @@ interface ScreenProps {
 }
 
 interface DataProps {
-  id: string;
+  id: string | number[];
   company: string;
   finishedParams: boolean;
   title: string;
@@ -64,7 +64,7 @@ const ListToDo: React.FC<ScreenProps> = ({ navigation }) => {
 
   const { signOut } = useAuth();
 
-  const handleDelete = (id: string) => {
+  const handleDelete = (id: string | number[]) => {
     setTasks(tasks.filter(t => t.id !== id))
     setIsOpenModalDelete(false)
   }
