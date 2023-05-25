@@ -3,8 +3,7 @@ import { KeyboardAvoidingView, Platform, ScrollView, TouchableWithoutFeedback, K
 import Icon from 'react-native-vector-icons/AntDesign';
 import moment from 'moment';
 
-import { v4 as uuidv4 } from 'uuid';
-import 'react-native-get-random-values';
+import uuid from 'react-native-uuid';
 
 import { Container, ContainerHeader, Logo, Text, Title, ContainerInput, TitleInputs, DivCompanys, ContainerLogo } from './styles';
 
@@ -38,8 +37,9 @@ const NewTask: React.FC<ScreenProps> = ({ navigation }) => {
     const dateValid = moment(dateTask, 'DD/MM', true).isValid();
     if(descriptionTask && dateTask && hourTask) {
       if(hourValid && dateValid) {
+        
         const DataNewTask = {
-          id: uuidv4(),
+          id: uuid.v4(),
           company: companyTask,
           finishedParams: false,
           title: descriptionTask,

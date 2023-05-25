@@ -10,7 +10,7 @@ type MyState = {
 };
 
 interface DataProps {
-  id: string;
+  id: string | number[];
   company: string;
   finishedParams: boolean;
   title: string;
