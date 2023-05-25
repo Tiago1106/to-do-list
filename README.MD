@@ -29,9 +29,12 @@ $ git clone https://github.com/Tiago1106/to-do-list.git
 $ yarn install or npm install
 # Execute the project
 $ yarn start or npm start
-#To login to the application, use:
-#Email: teste@gmail.com
-#Password: 123456
+# To start the application with expo go, you need to be on the same network, and scan the qrcode
+# If running an emulator type:
+# a for android
+# To login to the application, use:
+# Email: teste@gmail.com
+# Password: 123456
 ```
 
 ## 📚 Additional documentations:
